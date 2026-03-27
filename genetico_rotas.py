@@ -3,11 +3,11 @@
 import random
 import numpy as np
 
-pontos = np.array([(random.randint(0,100), random.randint(0,100)) for _ in range(5)])
+pontos = np.array([(random.randint(0,100), random.randint(0,100)) for _ in range(10)])
 matriz_distancia = []
-for i in range(5):
+for i in range(10):
     linha = []
-    for j in range(5):
+    for j in range(10):
         dist = np.linalg.norm(pontos[i] - pontos[j])
         linha.append(dist)
     matriz_distancia.append(linha)
@@ -16,7 +16,7 @@ for i in range(5):
 print(np.array(pontos))
 print(np.array(matriz_distancia))
 
-populacao = np.array([random.sample(range(5), 5) for _ in range(20)])
+populacao = np.array([random.sample(range(10), 10) for _ in range(20)])
 
 print(np.array(populacao))
 
@@ -71,6 +71,30 @@ def selecao(populacao, fitness_notas):
         escolhido = populacao[melhor_indice]  
         selecionados.append(escolhido)
     return selecionados
+
+def cruzamento (pais):
+
+    filhos = []
+
+    for i in range(0, len(pais), 2):
+
+        if i+1 < len(pais):
+
+            pai1 = pais[i]
+            pai2 = pais[i+1]
+
+            ponto1 = 3
+            ponto2 = 7
+
+            filho1 = np.zeros([])
+            filho1[3:7] = pai1[3:7]
+
+            for genes in pai2:
+
+                
+
+                
+
 
 
 
