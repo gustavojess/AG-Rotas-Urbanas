@@ -3,11 +3,11 @@
 import random
 import numpy as np
 
-pontos = np.array([(random.randint(0,100), random.randint(0,100)) for _ in range(20)])
+pontos = np.array([(random.randint(0,100), random.randint(0,100)) for _ in range(10)])
 matriz_distancia = []
-for i in range(20):
+for i in range(10):
     linha = []
-    for j in range(20):
+    for j in range(10):
         dist = np.linalg.norm(pontos[i] - pontos[j])
         linha.append(dist)
     matriz_distancia.append(linha)
@@ -16,7 +16,7 @@ for i in range(20):
 print(np.array(pontos))
 print(np.array(matriz_distancia))
 
-populacao = np.array([random.sample(range(20), 20) for _ in range(100)])
+populacao = np.array([random.sample(range(10), 10) for _ in range(100)])
 
 def distancia (p1, p2):
     distancia = np.linalg.norm(p1 - p2)
