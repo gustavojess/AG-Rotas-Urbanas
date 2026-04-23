@@ -15,6 +15,10 @@ Eduardo Tieppo - Orientador;
 
 Breno Bellintani - Co-Orientador
 
+# Problema do Caixeiro Viajante (TSP)
+<img width="259" height="194" alt="image" src="https://github.com/user-attachments/assets/d51110a2-6429-4e20-9e4b-d31702cb64eb" />
+
+
 # Algoritmo Genético - Imagem de Funcionamento
 <img width="547" height="294" alt="image" src="https://github.com/user-attachments/assets/d41ae739-8cef-445d-b32b-b14136221551" />
 
