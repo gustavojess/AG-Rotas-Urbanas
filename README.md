@@ -6,3 +6,11 @@ Este trabalho tem como objetivo implementar e comparar diferentes variações de
 Para isso, será construído um ambiente experimental baseado em matrizes de distâncias representando deslocamentos urbanos simulados, no qual diferentes configurações do algoritmo serão executadas e analisadas estatisticamente quanto à qualidade das soluções e estabilidade dos resultados.
 Este projeto contribui tanto para a compreensão teórica do comportamento de estratégias evolutivas em problemas de roteamento quanto para a demonstração de sua aplicabilidade prática em cenários urbanos.
 
+# Autores e Funções
+Gustavo Jess Meira - Desenvolvedor, Escritor e Analista
+Nicolas Rinato - A definir (Exército)
+Eduardo Tieppo - Orientador
+Breno Bellintani - Co-Orientador
+
+# Algoritmo Genético - Imagem de Funcionamento
+<img width="547" height="294" alt="image" src="https://github.com/user-attachments/assets/d41ae739-8cef-445d-b32b-b14136221551" />
