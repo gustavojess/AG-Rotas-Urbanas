@@ -17,3 +17,6 @@ Breno Bellintani - Co-Orientador
 
 # Algoritmo Genético - Imagem de Funcionamento
 <img width="547" height="294" alt="image" src="https://github.com/user-attachments/assets/d41ae739-8cef-445d-b32b-b14136221551" />
+
+# Função de Cruzamento - Imagem
+<img width="560" height="237" alt="image" src="https://github.com/user-attachments/assets/d4b824e5-a22c-4275-b20d-2aec58c68ef6" />
