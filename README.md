@@ -7,9 +7,12 @@ Para isso, será construído um ambiente experimental baseado em matrizes de dis
 Este projeto contribui tanto para a compreensão teórica do comportamento de estratégias evolutivas em problemas de roteamento quanto para a demonstração de sua aplicabilidade prática em cenários urbanos.
 
 # Autores e Funções
-Gustavo Jess Meira - Desenvolvedor, Escritor e Analista
-Nicolas Rinato - A definir (Exército)
-Eduardo Tieppo - Orientador
+Gustavo Jess Meira - Desenvolvedor, Escritor e Analista;
+
+Nicolas Rinato - A definir (Exército);
+
+Eduardo Tieppo - Orientador;
+
 Breno Bellintani - Co-Orientador
 
 # Algoritmo Genético - Imagem de Funcionamento
