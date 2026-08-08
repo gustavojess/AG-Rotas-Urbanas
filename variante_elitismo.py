@@ -126,6 +126,11 @@ def mutacao (filhos):
 for geracao in range(200):    
 
     fitness = avaliar(populacao)
+
+    melhor_fitness = max(fitness)
+    melhor_indice = fitness.index(melhor_fitness)
+    elite = populacao[melhor_indice]
+
     pais = selecao(populacao, fitness)
     filhos = cruzamento(pais)
     populacao = mutacao(filhos)
@@ -133,10 +138,11 @@ for geracao in range(200):
     nota_filhos = avaliar(populacao)
     media_filhos = np.mean(nota_filhos)
     
-    melhor_fitness = max(nota_filhos)
-    melhor_indice = nota_filhos.index(melhor_fitness)
-    melhor_individuo = populacao[melhor_indice]
+    pior_fitness = min(nota_filhos)
+    pior_indice = nota_filhos.index(pior_fitness)
+    populacao[pior_indice] = elite
 
 
-    print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_individuo} | Melhor Fitness: {melhor_fitness} | Fitness média: {media_filhos}')
+
+    print(f'Melhor indivíduo da {geracao + 1} geração: {elite} | Melhor Fitness: {melhor_fitness} | Fitness média: {media_filhos}')
         
