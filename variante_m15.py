@@ -116,7 +116,7 @@ def mutacao (filhos):
     novos_filhos = []
     for individuo in filhos:
         novo = individuo.copy()
-        if random.random() < 0.05:
+        if random.random() < 0.15:
             posicao1, posicao2 = sorted(np.random.choice(len(individuo), 2, replace=False))
             novo[posicao1], novo[posicao2] = novo[posicao2], novo[posicao1]
         novos_filhos.append(novo)
@@ -126,10 +126,6 @@ def mutacao (filhos):
 for geracao in range(200):    
 
     fitness = np.array(avaliar(populacao))
-
-    indices_melhores = np.argsort(fitness)[-2:]
-    elites = populacao[indices_melhores].copy()
-
     pais = selecao(populacao, fitness)
     filhos = cruzamento(pais)
     populacao = np.array(mutacao(filhos))
@@ -137,10 +133,10 @@ for geracao in range(200):
     nota_filhos = avaliar(populacao)
     media_filhos = np.mean(nota_filhos)
     
-    indices_piores = np.argsort(nota_filhos)[:2]
-    populacao[indices_piores] = elites
+    melhor_fitness = max(nota_filhos)
+    melhor_indice = nota_filhos.index(melhor_fitness)
+    melhor_individuo = populacao[melhor_indice]
 
-    melhor_elite = elites[np.argmax(fitness[indices_melhores])]
 
-    print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_elite} | Melhor Fitness: {max(fitness)} | Fitness média: {media_filhos}')
+    print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_individuo} | Melhor Fitness: {melhor_fitness} | Fitness média: {media_filhos}')
         

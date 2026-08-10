@@ -47,29 +47,7 @@ def avaliar (populacao):
     return fitness_notas
 
 def selecao(populacao, fitness_notas):
-
-    selecionados = []
-
-    k = 3
-    
-    for i in range(len(populacao)):
-        torneio = []
-        maior_fitness = -999
-        melhor_indice = -1
-        escolhido = []  
-        for j in range(k):
-            indice_escolhido = random.randint(0, len(populacao) - 1)
-            torneio.append(indice_escolhido)
-        
-        for x in range(len(torneio)):
-            indice_individuo = torneio[x]
-            if fitness_notas[indice_individuo] > maior_fitness:
-                maior_fitness = fitness_notas[indice_individuo]
-                melhor_indice = indice_individuo
-        
-        escolhido = populacao[melhor_indice]  
-        selecionados.append(escolhido)
-    return selecionados
+    return random.choices(populacao, weights=fitness_notas, k=len(populacao))
 
 def ox (pai1, pai2, ponto1, ponto2):
 
