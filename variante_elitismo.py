@@ -142,5 +142,5 @@ for geracao in range(200):
 
     melhor_elite = elites[np.argmax(fitness[indices_melhores])]
 
-    print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_elite} | Melhor Fitness: {max(fitness)} | Fitness média: {media_filhos}')
+    print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_elite} | Melhor Fitness: {max(fitness)} | Fitness média: {media_filhos} | Custo total: {1/(max(fitness)) - 1}')
         

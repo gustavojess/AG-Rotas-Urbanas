@@ -138,5 +138,5 @@ for geracao in range(200):
     melhor_individuo = populacao[melhor_indice]
 
 
-    print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_individuo} | Melhor Fitness: {melhor_fitness} | Fitness média: {media_filhos}')
+    print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_individuo} | Melhor Fitness: {melhor_fitness} | Fitness média: {media_filhos} | Custo total: {1/(melhor_fitness) - 1}')
         
