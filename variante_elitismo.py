@@ -2,6 +2,11 @@
 
 import random
 import numpy as np
+import csv
+import time
+import os
+
+inicio = time.perf_counter()
 
 pontos = np.array([(random.randint(0,100), random.randint(0,100)) for _ in range(20)])
 matriz_distancia = []
@@ -126,6 +131,7 @@ def mutacao (filhos):
 for geracao in range(200):    
 
     fitness = np.array(avaliar(populacao))
+    media_fitness = np.mean(fitness)
 
     indices_melhores = np.argsort(fitness)[-2:]
     elites = populacao[indices_melhores].copy()
@@ -135,12 +141,29 @@ for geracao in range(200):
     populacao = np.array(mutacao(filhos))
 
     nota_filhos = avaliar(populacao)
-    media_filhos = np.mean(nota_filhos)
     
     indices_piores = np.argsort(nota_filhos)[:2]
     populacao[indices_piores] = elites
 
     melhor_elite = elites[np.argmax(fitness[indices_melhores])]
+    custo_total = 1/(fitness[np.argmax(fitness[indices_melhores])]) - 1
+    print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_elite} | Melhor Fitness: {max(fitness)} | Fitness média: {media_fitness} | Custo total: {custo_total}')
 
-    print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_elite} | Melhor Fitness: {max(fitness)} | Fitness média: {media_filhos} | Custo total: {1/(max(fitness)) - 1}')
-        
+fim = time.perf_counter()
+tempo_total = fim - inicio
+print(f'Tempo total de execução: {tempo_total:.2f} segundos')
+
+meus_dados = [
+
+    melhor_elite,
+    media_fitness,
+    custo_total,
+    tempo_total
+]
+
+with open('resultados_elitismo.csv', 'a', newline='') as arquivo_csv:
+    escritor_csv = csv.writer(arquivo_csv)
+    if os.stat('resultados_elitismo.csv').st_size == 0:
+        escritor_csv.writerow(['Melhor Individuo', 'Fitness Media', 'Custo Total', 'Tempo Total'])
+    escritor_csv.writerow(meus_dados)
+

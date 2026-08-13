@@ -2,6 +2,11 @@
 
 import random
 import numpy as np
+import csv
+import time
+import os
+
+inicio = time.perf_counter()
 
 pontos = np.array([(random.randint(0,100), random.randint(0,100)) for _ in range(20)])
 matriz_distancia = []
@@ -126,17 +131,35 @@ def mutacao (filhos):
 for geracao in range(200):    
 
     fitness = avaliar(populacao)
+    media_fitness = np.mean(fitness)
     pais = selecao(populacao, fitness)
     filhos = cruzamento(pais)
     populacao = mutacao(filhos)
 
     nota_filhos = avaliar(populacao)
-    media_filhos = np.mean(nota_filhos)
     
     melhor_fitness = max(nota_filhos)
     melhor_indice = nota_filhos.index(melhor_fitness)
     melhor_individuo = populacao[melhor_indice]
 
+    custo_total = 1/(melhor_fitness) - 1
 
-    print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_individuo} | Melhor Fitness: {melhor_fitness} | Fitness média: {media_filhos} | Custo total: {1/(melhor_fitness) - 1}')
-        
+    print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_individuo} | Melhor Fitness: {melhor_fitness} | Fitness média: {media_fitness} | Custo total: {custo_total}')
+fim = time.perf_counter()
+tempo_total = fim - inicio
+print(f'Tempo total de execução: {tempo_total:.2f} segundos')
+
+meus_dados = [
+
+    melhor_fitness,
+    media_fitness,
+    custo_total,
+    tempo_total
+]
+
+with open('resultados_genetico.csv', 'a', newline='') as arquivo_csv:
+    escritor_csv = csv.writer(arquivo_csv)
+    if os.stat('resultados_genetico.csv').st_size == 0:
+        escritor_csv.writerow(['Melhor Fitness', 'Fitness Média', 'Custo Total', 'Tempo Total'])
+    escritor_csv.writerow(meus_dados)
+    

@@ -2,6 +2,10 @@
 
 import random
 import numpy as np
+import csv
+import time
+
+inicio = time.perf_counter()
 
 pontos = np.array([(random.randint(0,100), random.randint(0,100)) for _ in range(20)])
 matriz_distancia = []
@@ -52,6 +56,18 @@ def vizinho_mais_proximo(pontos, matriz_distancia):
 caminho, custo_total = vizinho_mais_proximo(pontos, matriz_distancia)
 print("Caminho encontrado:", caminho)
 print("Custo total:", custo_total)
+fim = time.perf_counter()
+tempo_total = fim - inicio
+
+meus_dados = [
+    custo_total,
+    tempo_total
+]
+
+with open('resultados_baseline.csv', 'w', newline='') as arquivo_csv:
+    escritor_csv = csv.writer(arquivo_csv)
+    escritor_csv.writerow(['Custo Total', 'Tempo Total'])
+    escritor_csv.writerow(meus_dados)
 
 
 
