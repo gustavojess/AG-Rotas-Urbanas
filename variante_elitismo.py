@@ -8,7 +8,18 @@ import os
 
 inicio = time.perf_counter()
 
-pontos = np.array([(random.randint(0,100), random.randint(0,100)) for _ in range(20)])
+pontos = []
+
+with open('20_pontos.csv', 'r') as arquivo_csv:
+    leitor_csv = csv.reader(arquivo_csv)
+    next(leitor_csv) 
+    for linha in leitor_csv:
+        ponto = (int(linha[0]), int(linha[1]))
+        pontos.append(ponto)
+pontos = np.array(pontos)
+
+#pontos = np.array([(random.randint(0,100), random.randint(0,100)) for _ in range(20)])
+
 matriz_distancia = []
 for i in range(20):
     linha = []
@@ -147,6 +158,9 @@ for geracao in range(200):
 
     melhor_elite = elites[np.argmax(fitness[indices_melhores])]
     custo_total = 1/(fitness[np.argmax(fitness[indices_melhores])]) - 1
+
+    fitness_melhor_elite = fitness[np.argmax(fitness[indices_melhores])]
+
     print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_elite} | Melhor Fitness: {max(fitness)} | Fitness média: {media_fitness} | Custo total: {custo_total}')
 
 fim = time.perf_counter()
@@ -155,7 +169,7 @@ print(f'Tempo total de execução: {tempo_total:.2f} segundos')
 
 meus_dados = [
 
-    melhor_elite,
+    fitness_melhor_elite,
     media_fitness,
     custo_total,
     tempo_total

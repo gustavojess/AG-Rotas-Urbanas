@@ -7,7 +7,18 @@ import time
 
 inicio = time.perf_counter()
 
-pontos = np.array([(random.randint(0,100), random.randint(0,100)) for _ in range(20)])
+#pontos = np.array([(random.randint(0,100), random.randint(0,100)) for _ in range(20)])
+
+pontos = []
+
+with open('20_pontos.csv', 'r') as arquivo_csv:
+    leitor_csv = csv.reader(arquivo_csv)
+    next(leitor_csv) 
+    for linha in leitor_csv:
+        ponto = (float(linha[0]), float(linha[1]))
+        pontos.append(ponto)
+pontos = np.array(pontos)
+
 matriz_distancia = []
 for i in range(20):
     linha = []

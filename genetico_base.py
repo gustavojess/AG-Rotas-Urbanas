@@ -8,7 +8,18 @@ import os
 
 inicio = time.perf_counter()
 
-pontos = np.array([(random.randint(0,100), random.randint(0,100)) for _ in range(20)])
+pontos = []
+
+with open('20_pontos.csv', 'r') as arquivo_csv:
+    leitor_csv = csv.reader(arquivo_csv)
+    next(leitor_csv) 
+    for linha in leitor_csv:
+        ponto = (int(linha[0]), int(linha[1]))
+        pontos.append(ponto)
+pontos = np.array(pontos)
+
+#pontos = np.array([(random.randint(0,100), random.randint(0,100)) for _ in range(20)])
+
 matriz_distancia = []
 for i in range(20):
     linha = []
@@ -157,9 +168,9 @@ meus_dados = [
     tempo_total
 ]
 
-with open('resultados_genetico.csv', 'a', newline='') as arquivo_csv:
+with open('resultados_genetico_base.csv', 'a', newline='') as arquivo_csv:
     escritor_csv = csv.writer(arquivo_csv)
-    if os.stat('resultados_genetico.csv').st_size == 0:
-        escritor_csv.writerow(['Melhor Fitness', 'Fitness Média', 'Custo Total', 'Tempo Total'])
+    if os.stat('resultados_genetico_base.csv').st_size == 0:
+        escritor_csv.writerow(['Melhor Fitness', 'Fitness Media', 'Custo Total', 'Tempo Total'])
     escritor_csv.writerow(meus_dados)
     
