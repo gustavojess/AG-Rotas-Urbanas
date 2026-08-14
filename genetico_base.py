@@ -139,6 +139,11 @@ def mutacao (filhos):
 
     return novos_filhos
 
+with open ('resultados_genetico_base.csv', 'a', newline='') as arquivo_csv:
+    escritor_csv = csv.writer(arquivo_csv)
+    if os.stat('resultados_genetico_base.csv').st_size == 0:
+        escritor_csv.writerow(['Melhor Fitness'])
+
 for geracao in range(200):    
 
     fitness = avaliar(populacao)
@@ -154,23 +159,30 @@ for geracao in range(200):
     melhor_individuo = populacao[melhor_indice]
 
     custo_total = 1/(melhor_fitness) - 1
+    custo_geracao = 1/(melhor_fitness) - 1
+    
+    menor_custo = float('inf')
+    if custo_total < menor_custo:
+        menor_custo = custo_total
+    
+    print("Geração:", geracao + 1, "Melhor Fitness:", melhor_fitness, "Custo Total:", custo_geracao)
+    with open('resultados_genetico_base.csv', 'a', newline='') as arquivo_csv:
+        escritor_csv = csv.writer(arquivo_csv)
+        escritor_csv.writerow([melhor_fitness])
 
-    print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_individuo} | Melhor Fitness: {melhor_fitness} | Fitness média: {media_fitness} | Custo total: {custo_total}')
 fim = time.perf_counter()
 tempo_total = fim - inicio
+
 print(f'Tempo total de execução: {tempo_total:.2f} segundos')
-
-meus_dados = [
-
-    melhor_fitness,
-    media_fitness,
-    custo_total,
-    tempo_total
-]
-
 with open('resultados_genetico_base.csv', 'a', newline='') as arquivo_csv:
     escritor_csv = csv.writer(arquivo_csv)
-    if os.stat('resultados_genetico_base.csv').st_size == 0:
-        escritor_csv.writerow(['Melhor Fitness', 'Fitness Media', 'Custo Total', 'Tempo Total'])
-    escritor_csv.writerow(meus_dados)
+    escritor_csv.writerow(['Tempo Total', tempo_total])
+    escritor_csv.writerow(['Melhor Custo', menor_custo])
+    
+
+#with open('resultados_genetico_base.csv', 'a', newline='') as arquivo_csv:
+ #   escritor_csv = csv.writer(arquivo_csv)
+  #  if os.stat('resultados_genetico_base.csv').st_size == 0:
+   #     escritor_csv.writerow(['Melhor Fitness', 'Fitness Media', 'Custo Total', 'Tempo Total'])
+    #escritor_csv.writerow(meus_dados)
     

@@ -139,6 +139,11 @@ def mutacao (filhos):
 
     return novos_filhos
 
+with open ('resultados_elitismo.csv', 'a', newline='') as arquivo_csv:
+    escritor_csv = csv.writer(arquivo_csv)
+    if os.stat('resultados_elitismo.csv').st_size == 0:
+        escritor_csv.writerow(['Melhor Fitness'])
+
 for geracao in range(200):    
 
     fitness = np.array(avaliar(populacao))
@@ -158,26 +163,25 @@ for geracao in range(200):
 
     melhor_elite = elites[np.argmax(fitness[indices_melhores])]
     custo_total = 1/(fitness[np.argmax(fitness[indices_melhores])]) - 1
+    custo_geracao = 1/(fitness[np.argmax(fitness[indices_melhores])]) - 1
+        
+    menor_custo = float('inf')
+    if custo_total < menor_custo:
+        menor_custo = custo_total
 
     fitness_melhor_elite = fitness[np.argmax(fitness[indices_melhores])]
 
-    print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_elite} | Melhor Fitness: {max(fitness)} | Fitness média: {media_fitness} | Custo total: {custo_total}')
-
+    print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_elite} | Melhor Fitness: {max(fitness)} | Fitness média: {media_fitness} | Custo total: {custo_geracao}')
+    with open('resultados_elitismo.csv', 'a', newline='') as arquivo_csv:
+        escritor_csv = csv.writer(arquivo_csv)
+        escritor_csv.writerow([fitness_melhor_elite])
+        
 fim = time.perf_counter()
 tempo_total = fim - inicio
 print(f'Tempo total de execução: {tempo_total:.2f} segundos')
 
-meus_dados = [
-
-    fitness_melhor_elite,
-    media_fitness,
-    custo_total,
-    tempo_total
-]
-
 with open('resultados_elitismo.csv', 'a', newline='') as arquivo_csv:
     escritor_csv = csv.writer(arquivo_csv)
-    if os.stat('resultados_elitismo.csv').st_size == 0:
-        escritor_csv.writerow(['Melhor Individuo', 'Fitness Media', 'Custo Total', 'Tempo Total'])
-    escritor_csv.writerow(meus_dados)
+    escritor_csv.writerow(['Tempo Total', tempo_total])
+    escritor_csv.writerow(['Melhor Custo', menor_custo])
 
