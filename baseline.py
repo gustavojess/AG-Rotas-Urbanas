@@ -18,7 +18,6 @@ with open('20_pontos.csv', 'r') as arquivo_csv:
         ponto = (float(linha[0]), float(linha[1]))
         pontos.append(ponto)
 pontos = np.array(pontos)
-
 matriz_distancia = []
 for i in range(20):
     linha = []
@@ -31,28 +30,27 @@ for i in range(20):
 print(np.array(pontos))
 print(np.array(matriz_distancia))
 
-def distancia (p1, p2):
-    distancia = np.linalg.norm(p1 - p2)
-
-    return distancia
 def vizinho_mais_proximo(pontos, matriz_distancia):
 
     origem = np.array([0,0])
-    cidade_inicial = distancia(origem, pontos).argmin()  # Encontra a cidade mais próxima da origem
+
+    distancias_origem = np.linalg.norm(pontos - origem, axis=1)
+
+    cidade_inicial = distancias_origem.argmin()  
     caminho = [cidade_inicial]
     nao_visitadas = set(range(len(pontos))) - {cidade_inicial} 
     cidade_atual = cidade_inicial
-    custo_total = distancia(origem, pontos[cidade_inicial])
+    custo_total = distancias_origem[cidade_inicial]  
 
     while nao_visitadas:
         menor_distancia = float('inf')
         proxima_cidade = None
 
-        for pontos in nao_visitadas:
-            dist = matriz_distancia[cidade_atual][pontos]
+        for cidade in nao_visitadas:
+            dist = matriz_distancia[cidade_atual][cidade]
             if dist < menor_distancia:
                 menor_distancia = dist
-                proxima_cidade = pontos
+                proxima_cidade = cidade
 
         if proxima_cidade is None:
             break
@@ -61,6 +59,7 @@ def vizinho_mais_proximo(pontos, matriz_distancia):
         nao_visitadas.remove(proxima_cidade)
         cidade_atual = proxima_cidade
         custo_total += menor_distancia
+    custo_total += np.linalg.norm(pontos[cidade_atual] - origem)
 
     return caminho, custo_total
 
@@ -79,7 +78,7 @@ meus_dados = [
 ]
 
 
-with open('resultados_baseline.csv', 'w', newline='') as arquivo_csv:
+with open('baseline_20pontos_resultados.csv', 'w', newline='') as arquivo_csv:
     escritor_csv = csv.writer(arquivo_csv)
     escritor_csv.writerow(['Custo Total', 'Tempo Total', 'Fitness'])
     escritor_csv.writerow(meus_dados)

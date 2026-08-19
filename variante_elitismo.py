@@ -8,9 +8,11 @@ import os
 
 inicio = time.perf_counter()
 
+execucao = 30
+
 pontos = []
 
-with open('20_pontos.csv', 'r') as arquivo_csv:
+with open('15_pontos.csv', 'r') as arquivo_csv:
     leitor_csv = csv.reader(arquivo_csv)
     next(leitor_csv) 
     for linha in leitor_csv:
@@ -21,9 +23,9 @@ pontos = np.array(pontos)
 #pontos = np.array([(random.randint(0,100), random.randint(0,100)) for _ in range(20)])
 
 matriz_distancia = []
-for i in range(20):
+for i in range(15):
     linha = []
-    for j in range(20):
+    for j in range(15):
         dist = np.linalg.norm(pontos[i] - pontos[j])
         linha.append(dist)
     matriz_distancia.append(linha)
@@ -32,7 +34,7 @@ for i in range(20):
 print(np.array(pontos))
 print(np.array(matriz_distancia))
 
-populacao = np.array([random.sample(range(20), 20) for _ in range(100)])
+populacao = np.array([random.sample(range(15), 15) for _ in range(100)])
 print(populacao)
 
 def distancia (p1, p2):
@@ -139,15 +141,16 @@ def mutacao (filhos):
 
     return novos_filhos
 
-with open ('resultados_elitismo.csv', 'a', newline='') as arquivo_csv:
+with open (f'resultados_elitismo_15pontos_{execucao}.csv', 'a', newline='') as arquivo_csv:
     escritor_csv = csv.writer(arquivo_csv)
-    if os.stat('resultados_elitismo.csv').st_size == 0:
+    if os.stat(f'resultados_elitismo_15pontos_{execucao}.csv').st_size == 0:
         escritor_csv.writerow(['Melhor Fitness'])
+
+menor_custo = float('inf')
 
 for geracao in range(200):    
 
     fitness = np.array(avaliar(populacao))
-    media_fitness = np.mean(fitness)
 
     indices_melhores = np.argsort(fitness)[-2:]
     elites = populacao[indices_melhores].copy()
@@ -161,26 +164,28 @@ for geracao in range(200):
     indices_piores = np.argsort(nota_filhos)[:2]
     populacao[indices_piores] = elites
 
-    melhor_elite = elites[np.argmax(fitness[indices_melhores])]
-    custo_total = 1/(fitness[np.argmax(fitness[indices_melhores])]) - 1
-    custo_geracao = 1/(fitness[np.argmax(fitness[indices_melhores])]) - 1
-        
-    menor_custo = float('inf')
-    if custo_total < menor_custo:
-        menor_custo = custo_total
+    fitness_final = np.array(avaliar(populacao))
 
-    fitness_melhor_elite = fitness[np.argmax(fitness[indices_melhores])]
+    melhor_indice = np.argmax(fitness_final)
+    melhor_individuo = populacao[melhor_indice]
+    melhor_fitness = fitness_final[melhor_indice]
+    media_fitness = np.mean(fitness_final)
 
-    print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_elite} | Melhor Fitness: {max(fitness)} | Fitness média: {media_fitness} | Custo total: {custo_geracao}')
-    with open('resultados_elitismo.csv', 'a', newline='') as arquivo_csv:
+    custo_geracao = (1 / melhor_fitness) - 1
+
+    if custo_geracao < menor_custo:
+        menor_custo = custo_geracao
+
+    print(f'Melhor indivíduo da {geracao + 1} geração: {melhor_individuo} | Melhor Fitness: {melhor_fitness} | Fitness média: {media_fitness} | Custo total: {custo_geracao}')
+    with open(f'resultados_elitismo_15pontos_{execucao}.csv', 'a', newline='') as arquivo_csv:
         escritor_csv = csv.writer(arquivo_csv)
-        escritor_csv.writerow([fitness_melhor_elite])
+        escritor_csv.writerow([melhor_fitness])
         
 fim = time.perf_counter()
 tempo_total = fim - inicio
 print(f'Tempo total de execução: {tempo_total:.2f} segundos')
 
-with open('resultados_elitismo.csv', 'a', newline='') as arquivo_csv:
+with open(f'resultados_elitismo_15pontos_{execucao}.csv', 'a', newline='') as arquivo_csv:
     escritor_csv = csv.writer(arquivo_csv)
     escritor_csv.writerow(['Tempo Total', tempo_total])
     escritor_csv.writerow(['Melhor Custo', menor_custo])

@@ -10,9 +10,9 @@ inicio = time.perf_counter()
 
 pontos = []
 
-execucao = 30
+execucao = 5
 
-with open('20_pontos.csv', 'r') as arquivo_csv:
+with open('50_pontos.csv', 'r') as arquivo_csv:
     leitor_csv = csv.reader(arquivo_csv)
     next(leitor_csv) 
     for linha in leitor_csv:
@@ -23,9 +23,9 @@ pontos = np.array(pontos)
 #pontos = np.array([(random.randint(0,100), random.randint(0,100)) for _ in range(20)])
 
 matriz_distancia = []
-for i in range(20):
+for i in range(50):
     linha = []
-    for j in range(20):
+    for j in range(50):
         dist = np.linalg.norm(pontos[i] - pontos[j])
         linha.append(dist)
     matriz_distancia.append(linha)
@@ -34,7 +34,7 @@ for i in range(20):
 print(np.array(pontos))
 print(np.array(matriz_distancia))
 
-populacao = np.array([random.sample(range(20), 20) for _ in range(100)])
+populacao = np.array([random.sample(range(50), 50) for _ in range(100)])
 print(populacao)
 
 def distancia (p1, p2):
@@ -141,9 +141,9 @@ def mutacao (filhos):
 
     return novos_filhos
 
-with open (f'resultados_genetico_base{execucao}.csv', 'a', newline='') as arquivo_csv:
+with open (f'resultados_agbase_20pontos_{execucao}.csv', 'a', newline='') as arquivo_csv:
     escritor_csv = csv.writer(arquivo_csv)
-    if os.stat(f'resultados_genetico_base{execucao}.csv').st_size == 0:
+    if os.stat(f'resultados_agbase_20pontos_{execucao}.csv').st_size == 0:
         escritor_csv.writerow(['Melhor Fitness'])
 
 menor_custo = float('inf')
@@ -168,7 +168,7 @@ for geracao in range(200):
         menor_custo = custo_total
     
     print("Geração:", geracao + 1, "Melhor Fitness:", melhor_fitness, "Custo Total:", custo_geracao)
-    with open(f'resultados_genetico_base{execucao}.csv', 'a', newline='') as arquivo_csv:
+    with open(f'resultados_agbase_50pontos_{execucao}.csv', 'a', newline='') as arquivo_csv:
         escritor_csv = csv.writer(arquivo_csv)
         escritor_csv.writerow([melhor_fitness])
 
@@ -176,7 +176,7 @@ fim = time.perf_counter()
 tempo_total = fim - inicio
 
 print(f'Tempo total de execução: {tempo_total:.2f} segundos')
-with open(f'resultados_genetico_base{execucao}.csv', 'a', newline='') as arquivo_csv:
+with open(f'resultados_agbase_50pontos_{execucao}.csv', 'a', newline='') as arquivo_csv:
     escritor_csv = csv.writer(arquivo_csv)
     escritor_csv.writerow(['Tempo Total', tempo_total])
     escritor_csv.writerow(['Melhor Custo', menor_custo])
