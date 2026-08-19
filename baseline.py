@@ -70,14 +70,18 @@ print("Custo total:", custo_total)
 fim = time.perf_counter()
 tempo_total = fim - inicio
 
+fitness = 1/(1 + custo_total)
+
 meus_dados = [
     custo_total,
-    tempo_total
+    tempo_total,
+    fitness
 ]
+
 
 with open('resultados_baseline.csv', 'w', newline='') as arquivo_csv:
     escritor_csv = csv.writer(arquivo_csv)
-    escritor_csv.writerow(['Custo Total', 'Tempo Total'])
+    escritor_csv.writerow(['Custo Total', 'Tempo Total', 'Fitness'])
     escritor_csv.writerow(meus_dados)
 
 

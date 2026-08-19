@@ -10,6 +10,8 @@ inicio = time.perf_counter()
 
 pontos = []
 
+execucao = 30
+
 with open('20_pontos.csv', 'r') as arquivo_csv:
     leitor_csv = csv.reader(arquivo_csv)
     next(leitor_csv) 
@@ -139,11 +141,12 @@ def mutacao (filhos):
 
     return novos_filhos
 
-with open ('resultados_genetico_base.csv', 'a', newline='') as arquivo_csv:
+with open (f'resultados_genetico_base{execucao}.csv', 'a', newline='') as arquivo_csv:
     escritor_csv = csv.writer(arquivo_csv)
-    if os.stat('resultados_genetico_base.csv').st_size == 0:
+    if os.stat(f'resultados_genetico_base{execucao}.csv').st_size == 0:
         escritor_csv.writerow(['Melhor Fitness'])
 
+menor_custo = float('inf')
 for geracao in range(200):    
 
     fitness = avaliar(populacao)
@@ -160,13 +163,12 @@ for geracao in range(200):
 
     custo_total = 1/(melhor_fitness) - 1
     custo_geracao = 1/(melhor_fitness) - 1
-    
-    menor_custo = float('inf')
+
     if custo_total < menor_custo:
         menor_custo = custo_total
     
     print("Geração:", geracao + 1, "Melhor Fitness:", melhor_fitness, "Custo Total:", custo_geracao)
-    with open('resultados_genetico_base.csv', 'a', newline='') as arquivo_csv:
+    with open(f'resultados_genetico_base{execucao}.csv', 'a', newline='') as arquivo_csv:
         escritor_csv = csv.writer(arquivo_csv)
         escritor_csv.writerow([melhor_fitness])
 
@@ -174,15 +176,15 @@ fim = time.perf_counter()
 tempo_total = fim - inicio
 
 print(f'Tempo total de execução: {tempo_total:.2f} segundos')
-with open('resultados_genetico_base.csv', 'a', newline='') as arquivo_csv:
+with open(f'resultados_genetico_base{execucao}.csv', 'a', newline='') as arquivo_csv:
     escritor_csv = csv.writer(arquivo_csv)
     escritor_csv.writerow(['Tempo Total', tempo_total])
     escritor_csv.writerow(['Melhor Custo', menor_custo])
     
 
-#with open('resultados_genetico_base.csv', 'a', newline='') as arquivo_csv:
+#with open(f'resultados_genetico_base{execucao}.csv', 'a', newline='') as arquivo_csv:
  #   escritor_csv = csv.writer(arquivo_csv)
-  #  if os.stat('resultados_genetico_base.csv').st_size == 0:
+  #  if os.stat(f'resultados_genetico_base{execucao}.csv').st_size == 0:
    #     escritor_csv.writerow(['Melhor Fitness', 'Fitness Media', 'Custo Total', 'Tempo Total'])
     #escritor_csv.writerow(meus_dados)
     
